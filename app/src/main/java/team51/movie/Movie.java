@@ -32,6 +32,7 @@ public class Movie implements Parcelable{
     public void setTitle(String title) {
         movieTitle = title;
     }
+
     public void setPath(String path) {
         moviePath = path;
     }
@@ -61,7 +62,6 @@ public class Movie implements Parcelable{
     public String getOverview() {
         return movieOverivew;
     }
-
 
     private Double getMovieVote() {
         return movieVote;

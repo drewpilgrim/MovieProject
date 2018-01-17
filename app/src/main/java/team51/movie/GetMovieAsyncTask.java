@@ -21,9 +21,9 @@ import java.net.URL;
  */
 
 public class GetMovieAsyncTask extends AsyncTask<String,Void,Movie[]> {
-    String mApiKey;
+    private String mApiKey;
     private final OnTaskCompleted mListener;
-    String sortMethod;
+    private String sortMethod;
 
 
     public GetMovieAsyncTask(OnTaskCompleted listener, String apiKey, String sortMethod) {
@@ -37,16 +37,15 @@ public class GetMovieAsyncTask extends AsyncTask<String,Void,Movie[]> {
 
     @Override
     protected Movie[] doInBackground(String... params) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+        HttpURLConnection urlConnection;
+        BufferedReader reader;
 
-        // Holds data returned from the API
-        String moviesJsonStr = null;
+        String moviesJsonStr;
 
         try {
             URL url = getUrl(params);
 
-            // Start connecting to get JSON
+            // Connect to get JSON
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -69,19 +68,11 @@ public class GetMovieAsyncTask extends AsyncTask<String,Void,Movie[]> {
         } catch (IOException e) {
             return null;
         }
-        if (reader != null) {
             try {
                 reader.close();
             } catch (final IOException e) {
 
             }
-        }
-        if (urlConnection != null) {
-            urlConnection.disconnect();
-        }
-
-
-
         try {
             // Parse JSON
             return getMoviesDataFromJson(moviesJsonStr);
