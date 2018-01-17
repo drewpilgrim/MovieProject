@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Movie</string>
+    <string name="movie_api_key">ccc65938377c518796bde2e9995d7dbc</string>>
+
+    <!-- Preference Strings !-->
+    <string name="preferences">Preferences</string>
+    <string name="sort_list">Movie Sort Method</string>
+    <string name="sort_popularity">Sort by Popularity</string>
+    <string name="sort_rating">Sort by Rating</string>
+    <string name="sort_popularity_url">popular</string>
+    <string name="sort_rating_url">top_rated</string>
+
+
+    <!--Detail Strings !-->
+    <string name="movie_poster">Movie Poster</string>
+    <string name="release_date">Release Date:</string>
+    <string name="no_release">No Release Date Avaliable</string>
+    <string name="vote_average">Voters Average:</string>
+    <string name="no_vote">No Voter Data Avaliable</string>
+    <string name="title">Title:</string>
+    <string name="overview">Overview:</string>
+    <string name="no_overview">No Overview Avaliable</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+</resources>
