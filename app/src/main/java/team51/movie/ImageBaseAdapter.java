@@ -1,6 +1,7 @@
 package team51.movie;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -61,6 +62,8 @@ public class ImageBaseAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+        Log.i("Posterpath", movies[position].getPosterPath());
+
 
         Picasso.with(context)
                 .load(movies[position].getPosterPath())

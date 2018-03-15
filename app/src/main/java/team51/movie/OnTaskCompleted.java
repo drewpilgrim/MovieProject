@@ -6,4 +6,8 @@ package team51.movie;
 
 interface OnTaskCompleted {
     void onFetchMoviesTaskCompleted(Movie[] movies);
+    void onFetchTrailersTaskCompleted(MovieTrailer[] movies);
+    void onFetchReviewsTaskCompleted(MovieReview[] movies);
+
+
 }

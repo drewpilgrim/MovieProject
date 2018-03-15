@@ -1,14 +1,17 @@
 <resources>
-    <string name="app_name">Movie</string>
-    <string name="movie_api_key">INSERTAPIKEYHERE</string>>
+    <string name="app_name">Movie Project Udacity</string>
+    <string name="movie_api_key">Insert API KEY</string>>
+    <string name="youtube_api_key">Insert API KEY</string>
 
     <!-- Preference Strings !-->
     <string name="preferences">Preferences</string>
     <string name="sort_list">Movie Sort Method</string>
     <string name="sort_popularity">Sort by Popularity</string>
     <string name="sort_rating">Sort by Rating</string>
+    <string name="sort_favorites">Sort by Favorites</string>
     <string name="sort_popularity_url">popular</string>
     <string name="sort_rating_url">top_rated</string>
+    <string name="sort_favorites_url">favorites</string>
 
 
     <!--Detail Strings !-->
@@ -23,10 +26,16 @@
     <string name="title_activity_settings">Settings</string>
 
 
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
 
     <!-- Example settings for Data & Sync -->
+
+    <!--Youtube Strings-->
+    <string name="title_logo">NATIONAL GEOGRAPHIC</string>
+    <string name="btn_skip_intro">Skip Intro</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
 </resources>

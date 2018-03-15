@@ -20,23 +20,25 @@ import java.net.URL;
  * Created by Drew on 11/29/17.
  */
 
-public class GetMovieAsyncTask extends AsyncTask<String,Void,Movie[]> {
+public class GetMovieReviewAsyncTask extends AsyncTask<String,Void,MovieReview[]> {
     private String mApiKey;
     private final OnTaskCompleted mListener;
-    private String sortMethod;
+    private String movieID;
+    DetailActivity activity;
 
 
-    public GetMovieAsyncTask(OnTaskCompleted listener, String apiKey, String sortMethod) {
+    public GetMovieReviewAsyncTask(OnTaskCompleted listener, String apiKey, String movieID, DetailActivity activity) {
         super();
 
         mListener = listener;
         mApiKey = apiKey;
-        this.sortMethod = sortMethod;
+        this.movieID = movieID;
+        this.activity = activity;
     }
 
 
     @Override
-    protected Movie[] doInBackground(String... params) {
+    protected MovieReview[] doInBackground(String... params) {
         HttpURLConnection urlConnection;
         BufferedReader reader;
 
@@ -75,54 +77,57 @@ public class GetMovieAsyncTask extends AsyncTask<String,Void,Movie[]> {
             }
         try {
             // Parse JSON
-            return getMoviesDataFromJson(moviesJsonStr);
+            return getReviewDataFromJson(moviesJsonStr);
         } catch (JSONException e) {
         }
+
+
 
         return null;
     }
 
 
-    private Movie[] getMoviesDataFromJson(String moviesJsonStr) throws JSONException {
+    private MovieReview[] getReviewDataFromJson(String moviesJsonStr) throws JSONException {
         JSONObject moviesJson = new JSONObject(moviesJsonStr);
         JSONArray resultsArray = moviesJson.getJSONArray("results");
 
-        Movie[] movies = new Movie[resultsArray.length()];
+        MovieReview[] reviews = new MovieReview[resultsArray.length()];
         for (int i = 0; i < resultsArray.length(); i++) {
             JSONObject movieInfo = resultsArray.getJSONObject(i);
-            String title = movieInfo.getString("original_title");
-            String releaseDate = movieInfo.getString("release_date");
-            String path = movieInfo.getString("poster_path");
-            String overview = movieInfo.getString("overview");
-            double vote = movieInfo.getDouble("vote_average");
-            int id = movieInfo.getInt("id");
-            movies[i] = new Movie(title,releaseDate,path,overview,vote, id);
+            String author = movieInfo.getString("author");
+            String content = movieInfo.getString("content");
+            String url = movieInfo.getString("url");
+            String id = movieInfo.getString("id");
+
+            reviews[i] = new MovieReview(id,author,content,url);
         }
 
-        return movies;
+        return reviews;
     }
 
     //https://stackoverflow.com/questions/19167954/use-uri-builder-in-android-or-create-url-with-variables
     private URL getUrl(String[] parameters) throws MalformedURLException {
         final String baseURL = "https://api.themoviedb.org/3/movie/";
-        final String sortBy = sortMethod;
         final String APIKey = "api_key";
 
         Uri.Builder uri = Uri.parse(baseURL).buildUpon();
 
-        uri.appendPath(sortBy);
+        uri.appendPath(movieID);
+        uri.appendPath("reviews");
         uri.appendQueryParameter(APIKey, mApiKey);
         uri.build();
-        Log.d("URL MOVIE PULL:", uri.toString());
+        Log.i("URL MOVIE REVIEW PULL:", uri.toString());
         return new URL(uri.toString());
-        //String Format: https://api.themoviedb.org/3/movie/popular?api_key=ccc65938377c518796bde2e9995d7dbc
     }
 
+
+
     @Override
-    protected void onPostExecute(Movie[] movies) {
-        super.onPostExecute(movies);
+    protected void onPostExecute(MovieReview[] reviews) {
+        super.onPostExecute(reviews);
+        activity.addReviews(reviews);
 
         // Notify UI
-        mListener.onFetchMoviesTaskCompleted(movies);
+        mListener.onFetchReviewsTaskCompleted(reviews);
     }
 }

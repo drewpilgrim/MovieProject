@@ -2,6 +2,7 @@ package team51.movie;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by Drew on 11/29/17.
@@ -13,6 +14,8 @@ public class Movie implements Parcelable{
     private String movieTitle,movieReleaseDate,moviePath,movieOverivew;
     private Double movieVote;
 
+    private int id;
+
     //Default Constructor
     public Movie(){
 
@@ -20,12 +23,13 @@ public class Movie implements Parcelable{
 
 
     //Constructor
-    public Movie(String movieTitle, String movieReleaseDate, String moviePath, String movieOverivew, Double movieVote) {
+    public Movie(String movieTitle, String movieReleaseDate, String moviePath, String movieOverivew, Double movieVote, int id) {
         this.movieTitle = movieTitle;
         this.movieReleaseDate = movieReleaseDate;
         this.moviePath = moviePath;
         this.movieOverivew = movieOverivew;
         this.movieVote = movieVote;
+        this.id = id;
     }
 
     //Setters
@@ -49,6 +53,10 @@ public class Movie implements Parcelable{
         movieReleaseDate = releaseDate;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     //Getters
     public String getOriginalTitle() {
         return movieTitle;
@@ -59,11 +67,13 @@ public class Movie implements Parcelable{
         return base_url + moviePath;
     }
 
+    public String getPath(){return moviePath;}
+
     public String getOverview() {
         return movieOverivew;
     }
 
-    private Double getMovieVote() {
+    public Double getMovieVote() {
         return movieVote;
     }
 
@@ -74,6 +84,13 @@ public class Movie implements Parcelable{
     public String getVoteAverage() {
         return String.valueOf(getMovieVote()) + "/10";
     }
+
+    public int getId() {
+        return id;
+    }
+
+
+
 
 
     @Override
@@ -88,6 +105,8 @@ public class Movie implements Parcelable{
         dest.writeString(moviePath);
         dest.writeString(movieOverivew);
         dest.writeValue(movieVote);
+        dest.writeInt(id);
+        Log.d("Parsel_WID", id +"");
     }
 
     private Movie(Parcel in) {
@@ -96,6 +115,9 @@ public class Movie implements Parcelable{
         moviePath = in.readString();
         movieOverivew = in.readString();
         movieVote = (Double) in.readValue(Double.class.getClassLoader());
+        id = in.readInt();
+        Log.d("Parsel_RID", id +"");
+
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

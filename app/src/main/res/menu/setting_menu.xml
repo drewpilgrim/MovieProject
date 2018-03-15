@@ -18,6 +18,9 @@
             <item
                 android:id="@+id/sort_rating"
                 android:title="@string/sort_rating" />
+            <item
+                android:id="@+id/sort_favorites"
+                android:title="@string/sort_favorites" />
 
 
         </group>

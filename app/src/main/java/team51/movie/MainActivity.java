@@ -3,8 +3,10 @@ package team51.movie;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -15,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
             case "top_rated":
                 menu.findItem(R.id.sort_rating).setChecked(true);
                 break;
+            case "favorites":
+                menu.findItem(R.id.favorites).setChecked(true);
+                break;
+
         }
         return true;
     }
@@ -72,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 sortM = getString(R.string.sort_rating_url);
                 getMovies();
                 break;
+            case R.id.sort_favorites:
+                item.setChecked(!item.isChecked());
+                sortM = getString(R.string.sort_favorites_url);
+                getMovies();
+                break;
+
 
 
         }
@@ -92,17 +106,56 @@ public class MainActivity extends AppCompatActivity {
                 public void onFetchMoviesTaskCompleted(Movie[] movies) {
                     gridView.setAdapter(new ImageBaseAdapter(getApplicationContext(), movies));
                 }
+
+                @Override
+                public void onFetchTrailersTaskCompleted(MovieTrailer[] movies) {
+
+                }
+
+                @Override
+                public void onFetchReviewsTaskCompleted(MovieReview[] movies) {
+
+                }
             };
-            SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(this);
             String sortMethod = sortM;
-            Log.d("GetMovies", sortMethod);
-//            sortMethod = "popular";
-            GetMovieAsyncTask movieTask = new GetMovieAsyncTask(taskCompleted, apiKey, sortMethod);
-            movieTask.execute(sortMethod);
+            Log.i("Sort Method:", sortMethod);
+            if(sortMethod.equals("favorites")){
+                Movie[] movies = getAll();
+                gridView.setAdapter(new ImageBaseAdapter(getApplicationContext(), movies));
+            }else {
+                GetMovieAsyncTask movieTask = new GetMovieAsyncTask(taskCompleted, apiKey, sortMethod);
+                movieTask.execute(sortMethod);
+            }
         } else {
 
         }
     }
+
+    //Get all from content provider
+    public Movie[] getAll() {
+//        getContentResolver().delete(MovieProvider.CONTENT_URI, null, null);
+        ArrayList<Movie> moviesList = new ArrayList<Movie>();
+        Uri uri = MovieProvider.CONTENT_URI;
+        Cursor c = getContentResolver().query(uri, null, null, null, null);
+        if (c != null) {
+            while (c.moveToNext()) {
+                String title = c.getString(c.getColumnIndexOrThrow("title"));
+                String releaseDate = c.getString(c.getColumnIndexOrThrow("release"));
+                String path = c.getString(c.getColumnIndexOrThrow("poster"));
+                String overview = c.getString(c.getColumnIndexOrThrow("overview"));
+                String vote = c.getString(c.getColumnIndexOrThrow("vote"));
+                String id = c.getString(c.getColumnIndexOrThrow("api_id"));
+                Movie movie = new Movie(title,releaseDate,path,overview,Double.parseDouble(vote),Integer.parseInt(id));
+                moviesList.add(movie);
+                Log.i("Demo", movie.getPath());
+            }
+            c.close();
+        }
+
+        Movie[] movies = moviesList.toArray(new Movie[moviesList.size()]);
+        return movies;
+    }
+
 
 
 

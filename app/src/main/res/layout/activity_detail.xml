@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:minWidth="600dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/activity_detail"
     >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="200dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="5">
 
-        <ImageView
-            android:id="@+id/imageview_poster"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:contentDescription="@string/movie_poster"
-            />
+
+        <!--<com.google.android.youtube.player.YouTubePlayerView-->
+            <!--android:id="@+id/trailer_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="30dp" />-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/textview_original_title"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp"
+                android:text="@string/title"
+                android:textSize="@dimen/abc_text_size_headline_material"
+                tools:ignore="PrivateResource" />
+
+            <ImageView
+                android:id="@+id/imageview_poster"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/movie_poster"
+                />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -41,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/release_date"
-                android:textSize="@dimen/abc_text_size_medium_material" />
+                android:textSize="@dimen/abc_text_size_medium_material"
+                tools:ignore="PrivateResource" />
 
             <TextView
                 android:id="@+id/textview_release_date"
@@ -51,7 +76,8 @@
                 android:paddingRight="2dp"
                 android:paddingEnd="2dp"
                 android:text="@string/release_date"
-                android:textSize="@dimen/abc_text_size_large_material" />
+                android:textSize="@dimen/abc_text_size_large_material"
+                tools:ignore="PrivateResource,RtlHardcoded" />
 
             <TextView
                 android:id="@+id/textview_vote_average_title"
@@ -59,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:text="@string/vote_average"
-                android:textSize="@dimen/abc_text_size_medium_material" />
+                android:textSize="@dimen/abc_text_size_medium_material"
+                tools:ignore="PrivateResource" />
 
             <TextView
                 android:id="@+id/textview_vote_average"
@@ -69,37 +96,87 @@
                 android:paddingRight="2dp"
                 android:paddingEnd="2dp"
                 android:text="@string/vote_average"
-                android:textSize="@dimen/abc_text_size_large_material" />
+                android:textSize="@dimen/abc_text_size_large_material"
+                tools:ignore="PrivateResource,RtlHardcoded" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+
+            <Button
+                android:text="Add to Favorites"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:onClick="onClickFavorite"
+                android:id="@+id/favorites" />
+
+            <TextView
+                android:text="Overview:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textview_overview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overview" />
+
+
+
+                <!--<FrameLayout-->
+                <!--android:id="@+id/youtube_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:visibility="visible" />-->
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TrailersLinearLayout"
+                    android:orientation="vertical">
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:text="Reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ReviewHeader" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ReviewsLinearLayout"
+                        android:orientation="vertical">
+                    </LinearLayout>
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/textview_original_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:paddingTop="10dp"
-            android:text="@string/title"
-            android:textSize="@dimen/abc_text_size_headline_material" />
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textview_overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/overview" />
-
-        </ScrollView>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
